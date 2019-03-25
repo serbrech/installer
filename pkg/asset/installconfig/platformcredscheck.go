@@ -54,6 +54,9 @@ func (a *PlatformCredsCheck) Generate(dependencies asset.Parents) error {
 		_, err = clientconfig.GetCloudFromYAML(opts)
 	case azure.Name:
 		err = azureconfig.GetSession()
+		if err != nil {
+			return errors.Wrap(err, "creating Azure session")
+		}
 	default:
 		err = fmt.Errorf("unknown platform type %q", platform)
 	}
